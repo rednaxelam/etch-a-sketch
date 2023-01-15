@@ -1,4 +1,23 @@
-setCanvasDimensions(100, 100);
+setCanvasDimensions(16, 16);
+addCanvasListeners();
+currentColor = '#000000';
+
+function addCanvasListeners() {
+  console.log('hello');
+  const elementList = document.querySelectorAll('.canvas-element');
+  console.log(elementList);
+  for (let i = 0; i < elementList.length; i++) {
+    console.log('hello');
+    const element = elementList.item(i);
+    element.addEventListener('mouseenter', changeElementColor);
+    console.log(i);
+  }
+}
+
+function changeElementColor(e) {
+  this.setAttribute('style', `background-color: ${currentColor}`);
+}
+
 
 // !!! setCanvasDimensions can be written in a way such that performing the checks in addBorderClasses is not needed. Change later if happy with structure of divs in the Canvas
 function setCanvasDimensions(numRows, numCols) {
