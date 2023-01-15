@@ -1,0 +1,45 @@
+body {
+  margin: 0px;
+  min-height: 100vh;
+}
+
+#main {
+  width: 800px;
+  min-height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#drawing-canvas {
+  height: 800px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-row {
+  display: flex;
+  flex: 1 1 10px;
+}
+
+.canvas-element {
+  flex: 1 1 10px;
+}
+
+.canvas-include-row-border {
+  border-bottom: 1px solid black;
+}
+
+.canvas-include-element-border {
+  border-right: 1px solid black;
+}
+
+.canvas-include-row-border.borders-bottom {
+  border-bottom: none;
+}
+
+.canvas-include-element-border.borders-right {
+  border-right: none;
+}
