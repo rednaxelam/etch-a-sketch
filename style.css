@@ -3,17 +3,49 @@ body {
   min-height: 100vh;
 }
 
+h1 {
+  margin: 0px;
+}
+
+button {
+  width: 200px;
+}
+
 #main {
-  width: 800px;
+  width: 100vw;
   min-height: 100vh;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  row-gap: 20px;
+}
+
+#header {
+  text-align: center;
+}
+
+#main-container {
+  display: flex;
+}
+
+#left-toolbar {
+  flex: 1 1 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+}
+
+#right-toolbar {
+  flex: 1 1 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
 }
 
 #drawing-canvas {
   height: 800px;
+  width: 800px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;

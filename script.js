@@ -1,4 +1,4 @@
-setCanvasDimensions(50, 50);
+setCanvasDimensions(30, 30);
 addCanvasListeners();
 currentColor = '#000000';
 
