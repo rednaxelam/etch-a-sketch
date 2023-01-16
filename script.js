@@ -1,23 +1,33 @@
-setCanvasDimensions(16, 16);
+setCanvasDimensions(50, 50);
 addCanvasListeners();
 currentColor = '#000000';
 
 function addCanvasListeners() {
-  console.log('hello');
   const elementList = document.querySelectorAll('.canvas-element');
-  console.log(elementList);
   for (let i = 0; i < elementList.length; i++) {
-    console.log('hello');
     const element = elementList.item(i);
-    element.addEventListener('mouseenter', changeElementColor);
-    console.log(i);
+    element.addEventListener('mouseenter', previewNewColor);
+    element.addEventListener('mouseleave', displayCurrentColor);
+    element.addEventListener('mousedown', setNewColor);
+    element.addEventListener('mouseover', setNewColorHold);
   }
 }
 
-function changeElementColor(e) {
+function previewNewColor() {
   this.setAttribute('style', `background-color: ${currentColor}`);
 }
 
+function displayCurrentColor() {
+  this.setAttribute('style', `background-color: ${this.getAttribute('data-color')}`)
+}
+
+function setNewColor() {
+  this.setAttribute('data-color', `${currentColor}`);
+}
+
+function setNewColorHold(e) {
+  if (e.buttons === 1) this.setAttribute('data-color', `${currentColor}`);
+}
 
 // !!! setCanvasDimensions can be written in a way such that performing the checks in addBorderClasses is not needed. Change later if happy with structure of divs in the Canvas
 function setCanvasDimensions(numRows, numCols) {
@@ -26,7 +36,7 @@ function setCanvasDimensions(numRows, numCols) {
     const canvasRow = createElement('div', {'class': ['canvas-row', 'canvas-include-row-border'], 'data-row': `${i}`});
     addBordersClasses(canvasRow, i, numRows);
     for (let j = 0; j < numCols; j++) {
-      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`});
+      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`, 'data-color': '#FFFFFF'});
       addBordersClasses(canvasElement, i, numRows, j, numCols);
       canvasRow.append(canvasElement);
     }
