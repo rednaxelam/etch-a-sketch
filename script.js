@@ -1,7 +1,22 @@
 setCanvasDimensions(30, 30);
 addCanvasListeners();
+addButtonListeners();
 currentColor = '#000000';
 
+function addButtonListeners() {
+  document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
+}
+
+// you don't need to create an element list in this way
+function clearCanvas() {
+  const elementList = document.querySelectorAll('.canvas-element');
+  for (let i = 0; i < elementList.length; i++) {
+    elementList.item(i).setAttribute('style', 'background-color: #FFFFFF');
+    elementList.item(i).setAttribute('data-color', '#FFFFFF');
+  }
+}
+
+// you don't need to create an element list in this way
 function addCanvasListeners() {
   const elementList = document.querySelectorAll('.canvas-element');
   for (let i = 0; i < elementList.length; i++) {
