@@ -26,6 +26,7 @@ body {
 
 .canvas-element {
   flex: 1 1 10px;
+  user-select: none;
 }
 
 .canvas-include-row-border {
