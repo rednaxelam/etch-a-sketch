@@ -1,11 +1,37 @@
 createNewCanvas(30, 30);
 addButtonListeners();
-console.log(Number(''));
 currentColor = '#000000';
 
 function addButtonListeners() {
   document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
   document.querySelector('#set-resolution-button').addEventListener('click', promptNewDimensions);
+  document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
+}
+
+function toggleBorders() {
+  const canvas = getCanvas();
+  const bordersButton = document.querySelector('#toggle-borders-button');
+  if (bordersButton.getAttribute('data-borders') === 'on') {
+    bordersButton.setAttribute('data-borders', 'off');
+    bordersButton.textContent = 'Enable Borders';
+  } else {
+    bordersButton.setAttribute('data-borders', 'on');
+    bordersButton.textContent = 'Remove Borders';
+  }
+  for (let row = canvas.firstChild; row !== null; row = row.nextSibling) {
+    if (bordersButton.getAttribute('data-borders') === 'on') {
+      row.classList.add('canvas-include-row-border');
+    } else {
+      row.classList.remove('canvas-include-row-border');
+    }
+    for (let element = row.firstChild; element !== null; element = element.nextSibling) {
+      if (bordersButton.getAttribute('data-borders') === 'on') {
+        element.classList.add('canvas-include-element-border');
+      } else {
+        element.classList.remove('canvas-include-element-border');
+      }
+    }
+  }
 }
 
 function promptNewDimensions() {
@@ -117,4 +143,8 @@ function createElement(type, attributes = {}) {
     }
   }
   return element;
+}
+
+function getCanvas() {
+  return document.querySelector('#drawing-canvas');
 }
