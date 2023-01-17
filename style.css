@@ -77,7 +77,11 @@ button {
   border-right: none;
 }
 
-.brush-active, .eraser-active {
+.brush-active, .eraser-active, .fill-active {
   background-color: blue;
   color: white;
+}
+
+.fill-icon {
+  cursor: crosshair;
 }

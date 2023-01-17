@@ -1,9 +1,34 @@
+let globalRowsMaxIndex;
+let globalColsMaxIndex;
+let currentColor = '#000000';
+let savedColor = '#000000';
+let previewNewColor = previewNewColorDefault;
+let displayCurrentColor = displayCurrentColorDefault;
+let setNewColor = setNewColorDefault;
+let setNewColorHold = setNewColorHoldDefault;
 createNewCanvas(30, 30);
 addButtonListeners();
-currentColor = '#000000';
-savedColor = '#000000';
 toggleBrush();
 
+function removeCanvasListeners() {
+  const canvas = getCanvas();
+  for (let row = canvas.firstChild; row !== null; row = row.nextSibling) {
+    for (let element = row.firstChild; element !== null; element = element.nextSibling) {
+      element.removeEventListener('mousedown', setNewColor);
+      element.removeEventListener('mouseover', setNewColorHold);
+    }
+  }
+}
+
+function updateCanvasListeners() {
+  const canvas = getCanvas();
+  for (let row = canvas.firstChild; row !== null; row = row.nextSibling) {
+    for (let element = row.firstChild; element !== null; element = element.nextSibling) {
+      element.addEventListener('mousedown', setNewColor);
+      element.addEventListener('mouseover', setNewColorHold);
+    }
+  }
+}
 
 function addButtonListeners() {
   document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
@@ -11,18 +36,78 @@ function addButtonListeners() {
   document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
   document.querySelector('#brush-button').addEventListener('click', toggleBrush);
   document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
+  document.querySelector('#fill-button').addEventListener('click', toggleFill);
 }
 
 function toggleBrush() {
   currentColor = savedColor;
+  removeCanvasListeners();
+  setNewColor = setNewColorDefault;
+  setNewColorHold = setNewColorHoldDefault;
+  updateCanvasListeners();
+  getCanvas().classList.remove('fill-icon');
   document.querySelector('#brush-button').classList.add('brush-active');
   document.querySelector('#eraser-button').classList.remove('eraser-active');
+  document.querySelector('#fill-button').classList.remove('fill-active');
 }
 
 function toggleEraser() {
   currentColor = '#FFFFFF';
+  removeCanvasListeners();
+  setNewColor = setNewColorDefault;
+  setNewColorHold = setNewColorHoldDefault;
+  updateCanvasListeners();
+  getCanvas().classList.remove('fill-icon');
   document.querySelector('#eraser-button').classList.add('eraser-active');
   document.querySelector('#brush-button').classList.remove('brush-active');
+  document.querySelector('#fill-button').classList.remove('fill-active');
+}
+
+function toggleFill() {
+  currentColor = savedColor;
+  removeCanvasListeners();
+  setNewColor = setNewColorFill;
+  setNewColorHold = setNewColorHoldFill;
+  updateCanvasListeners();
+  getCanvas().classList.add('fill-icon');
+  document.querySelector('#fill-button').classList.add('fill-active');
+  document.querySelector('#brush-button').classList.remove('brush-active');
+  document.querySelector('#eraser-button').classList.remove('eraser-active');
+}
+
+function setNewColorFill() {
+  const targetColor = this.getAttribute('data-color');
+  if (targetColor === currentColor) return;
+  else {
+    this.setAttribute('data-color', currentColor);
+    this.setAttribute('style', `background-color: ${currentColor}`);
+    const row = Number(this.getAttribute('data-row'));
+    const col = Number(this.getAttribute('data-col'));
+    setNewColorFillHelper(row, col - 1, targetColor);
+    setNewColorFillHelper(row, col + 1, targetColor);
+    setNewColorFillHelper(row - 1, col, targetColor);
+    setNewColorFillHelper(row + 1, col, targetColor);
+  }
+}
+
+function setNewColorFillHelper(row, col, targetColor) {
+  if ((row < 0 || row > globalRowsMaxIndex) || (col < 0 || col > globalColsMaxIndex)) return;
+  let canvasElement = document.querySelector('#drawing-canvas').childNodes.item(row).childNodes.item(col);
+  if (canvasElement.getAttribute('data-color') !== targetColor) return;
+  else {
+    canvasElement.setAttribute('data-color', currentColor);
+    canvasElement.setAttribute('style', `background-color: ${currentColor}`);
+    const row = Number(canvasElement.getAttribute('data-row'));
+    const col = Number(canvasElement.getAttribute('data-col'));
+    setNewColorFillHelper(row, col - 1, targetColor);
+    setNewColorFillHelper(row, col + 1, targetColor);
+    setNewColorFillHelper(row - 1, col, targetColor);
+    setNewColorFillHelper(row + 1, col, targetColor);
+  }
+}
+
+function setNewColorHoldFill() {
+  return;
 }
 
 function toggleBorders() {
@@ -82,25 +167,27 @@ function clearCanvas() {
   }
 }
 
-function previewNewColor() {
+function previewNewColorDefault() {
   this.setAttribute('style', `background-color: ${currentColor}`);
 }
 
-function displayCurrentColor() {
+function displayCurrentColorDefault() {
   this.setAttribute('style', `background-color: ${this.getAttribute('data-color')}`)
 }
 
-function setNewColor() {
+function setNewColorDefault() {
   this.setAttribute('data-color', `${currentColor}`);
 }
 
-function setNewColorHold(e) {
+function setNewColorHoldDefault(e) {
   if (e.buttons === 1) this.setAttribute('data-color', `${currentColor}`);
 }
 
 // !!! createNewCanvas can be written in a way such that performing the checks in addBorderClasses is not needed. Change later if happy with structure of divs in the Canvas
 function createNewCanvas(numRows, numCols) {
   removeCurrentCanvas();
+  globalRowsMaxIndex = numRows - 1;
+  globalColsMaxIndex = numCols - 1;
   const canvas = document.querySelector('#drawing-canvas');
   for (let i = 0; i < numRows; i++) {
     const canvasRow = createElement('div', {'class': ['canvas-row', 'canvas-include-row-border'], 'data-row': `${i}`});
