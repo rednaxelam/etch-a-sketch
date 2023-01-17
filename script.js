@@ -1,11 +1,28 @@
 createNewCanvas(30, 30);
 addButtonListeners();
 currentColor = '#000000';
+savedColor = '#000000';
+toggleBrush();
+
 
 function addButtonListeners() {
   document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
   document.querySelector('#set-resolution-button').addEventListener('click', promptNewDimensions);
   document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
+  document.querySelector('#brush-button').addEventListener('click', toggleBrush);
+  document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
+}
+
+function toggleBrush() {
+  currentColor = savedColor;
+  document.querySelector('#brush-button').classList.add('brush-active');
+  document.querySelector('#eraser-button').classList.remove('eraser-active');
+}
+
+function toggleEraser() {
+  currentColor = '#FFFFFF';
+  document.querySelector('#eraser-button').classList.add('eraser-active');
+  document.querySelector('#brush-button').classList.remove('brush-active');
 }
 
 function toggleBorders() {

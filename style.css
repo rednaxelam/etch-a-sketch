@@ -76,3 +76,8 @@ button {
 .canvas-include-element-border.borders-right {
   border-right: none;
 }
+
+.brush-active, .eraser-active {
+  background-color: blue;
+  color: white;
+}
