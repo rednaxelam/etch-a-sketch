@@ -11,6 +11,23 @@ createStandardColorPalette();
 addButtonListeners();
 toggleBrush();
 
+function addButtonListeners() {
+  document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
+  document.querySelector('#set-resolution-button').addEventListener('click', promptNewDimensions);
+  document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
+  document.querySelector('#brush-button').addEventListener('click', toggleBrush);
+  document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
+  document.querySelector('#fill-button').addEventListener('click', toggleFill);
+  document.querySelector('#add-color-button').addEventListener('click', addNewColorPaletteChoice);
+}
+
+function addNewColorPaletteChoice() {
+  const colorPalette = document.querySelector('#color-palette');
+  const newColor = document.querySelector('#add-color-choose-color').value;
+  const newColorPaletteChoice = createColorPaletteChoice(newColor);
+  colorPalette.appendChild(newColorPaletteChoice);
+}
+
 function createStandardColorPalette() {
   const colorPalette = document.querySelector('#color-palette');
   const standardColours = ['#000000', '#FF0000', '#3399ff', '#00cc00', '#00FF00', '#0000FF', '#ff0000', '#cc3399', '#cc00ff', '#ff9900', '#ffff00', '#99ff99', '#999966'];
@@ -64,15 +81,6 @@ function updateCanvasListeners() {
       element.addEventListener('mouseover', setNewColorHold);
     }
   }
-}
-
-function addButtonListeners() {
-  document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
-  document.querySelector('#set-resolution-button').addEventListener('click', promptNewDimensions);
-  document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
-  document.querySelector('#brush-button').addEventListener('click', toggleBrush);
-  document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
-  document.querySelector('#fill-button').addEventListener('click', toggleFill);
 }
 
 function toggleBrush() {
