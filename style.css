@@ -77,7 +77,7 @@ button {
   border-right: none;
 }
 
-.brush-active, .eraser-active, .fill-active {
+.brush-active, .eraser-active, .fill-active, .remove-color-active {
   background-color: blue;
   color: white;
 }
@@ -101,4 +101,8 @@ button {
 
 .color-palette-element-active {
   border: 2px solid black;
+}
+
+.remove-color-highlight {
+  opacity: 0.5;
 }

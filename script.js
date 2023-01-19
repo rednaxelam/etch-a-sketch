@@ -19,6 +19,49 @@ function addButtonListeners() {
   document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
   document.querySelector('#fill-button').addEventListener('click', toggleFill);
   document.querySelector('#add-color-button').addEventListener('click', addNewColorPaletteChoice);
+  document.querySelector('#add-color-button').addEventListener('click', disableColorDeleteMode);
+  document.querySelector('#remove-color-button').addEventListener('click', enableColorDeleteMode);
+}
+
+function enableColorDeleteMode() {
+  const colorPalette = document.querySelector('#color-palette');
+  const removeColorButton = document.querySelector('#remove-color-button');
+  removeColorButton.classList.add('remove-color-active');
+  removeColorButton.removeEventListener('click', enableColorDeleteMode);
+  removeColorButton.addEventListener('click', disableColorDeleteMode);
+  for (let paletteElement = colorPalette.firstElementChild; paletteElement !== null; paletteElement = paletteElement.nextElementSibling) {
+    paletteElement.removeEventListener('click', enableColor);
+    paletteElement.addEventListener('click', removeColor);
+    paletteElement.addEventListener('mouseenter', removeColorHighlight);
+    paletteElement.addEventListener('mouseleave', removeColorUnhighlight);
+  }
+}
+
+function removeColor() {
+  this.remove();
+}
+
+function removeColorHighlight() {
+  this.classList.add('remove-color-highlight');
+}
+
+function removeColorUnhighlight() {
+  this.classList.remove('remove-color-highlight');
+}
+
+
+function disableColorDeleteMode() {
+  const colorPalette = document.querySelector('#color-palette');
+  const removeColorButton = document.querySelector('#remove-color-button');
+  removeColorButton.classList.remove('remove-color-active');
+  removeColorButton.removeEventListener('click', disableColorDeleteMode);
+  removeColorButton.addEventListener('click', enableColorDeleteMode);
+  for (let paletteElement = colorPalette.firstElementChild; paletteElement !== null; paletteElement = paletteElement.nextElementSibling) {
+    paletteElement.removeEventListener('click', removeColor);
+    paletteElement.removeEventListener('mouseenter', removeColorHighlight);
+    paletteElement.removeEventListener('mouseleave', removeColorUnhighlight);
+    paletteElement.addEventListener('click', enableColor);
+  }
 }
 
 function addNewColorPaletteChoice() {
