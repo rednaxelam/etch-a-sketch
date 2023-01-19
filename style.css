@@ -85,3 +85,20 @@ button {
 .fill-icon {
   cursor: crosshair;
 }
+
+#color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+  max-width: 300px;
+  column-gap: 20px;
+}
+
+.color-palette-element {
+  width: 21px;
+  height: 21px;
+}
+
+.color-palette-element-active {
+  border: 2px solid black;
+}

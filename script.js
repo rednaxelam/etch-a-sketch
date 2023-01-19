@@ -7,8 +7,44 @@ let displayCurrentColor = displayCurrentColorDefault;
 let setNewColor = setNewColorDefault;
 let setNewColorHold = setNewColorHoldDefault;
 createNewCanvas(30, 30);
+createStandardColorPalette();
 addButtonListeners();
 toggleBrush();
+
+function createStandardColorPalette() {
+  const colorPalette = document.querySelector('#color-palette');
+  const standardColours = ['#000000', '#FF0000', '#3399ff', '#00cc00', '#00FF00', '#0000FF', '#ff0000', '#cc3399', '#cc00ff', '#ff9900', '#ffff00', '#99ff99', '#999966'];
+  for (let i = 0; i < standardColours.length; i++) {
+    paletteElement = createColorPaletteChoice(standardColours[i]);
+    colorPalette.append(paletteElement);
+  }
+}
+
+function createColorPaletteChoice(colorHex) {
+  const paletteElement = createElement('div', {'class': ['color-palette-element'], 'data-color': colorHex});
+  paletteElement.setAttribute('style', `background-color: ${colorHex}`);
+  paletteElement.addEventListener('click', enableColor);
+  return paletteElement;
+}
+
+function enableColor() {
+  // the following boolean expression is only true if the eraser is enabled
+  if (currentColor !== savedColor) return;
+  else {
+    const newColor = this.getAttribute('data-color');
+    currentColor = newColor;
+    savedColor = newColor;
+    removeActiveColorStyling();
+    this.classList.add('color-palette-element-active');
+  }
+}
+
+function removeActiveColorStyling() {
+  const colorPalette = document.querySelector('#color-palette');
+  for (let paletteElement = colorPalette.firstElementChild; paletteElement !== null; paletteElement = paletteElement.nextElementSibling) {
+    if (paletteElement.classList.contains('color-palette-element-active')) paletteElement.classList.remove('color-palette-element-active');
+  }
+}
 
 function removeCanvasListeners() {
   const canvas = getCanvas();
