@@ -35,7 +35,7 @@ function displayNewDimensionsSlider() {
   newDimensionsSliderValue.textContent = '30';
   setDimensionsChoice.append(newDimensionsSlider, newDimensionsSliderValue);
   const setNewDimensionsButton = createElement('button', {'id': 'set-dimensions-button'});
-  setNewDimensionsButton.textContent = 'Change';
+  setNewDimensionsButton.textContent = 'Clear All and Change';
   setDimensionsContainer.append(setDimensionsChoice, setNewDimensionsButton);
 
   setDimensionsViewOptionsButton.removeEventListener('click', displayNewDimensionsSlider);
