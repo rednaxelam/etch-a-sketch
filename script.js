@@ -1,7 +1,9 @@
 let globalRowsMaxIndex;
 let globalColsMaxIndex;
-let currentColor = '#000000';
-let savedColor = '#000000';
+let currentColor = '#000000FF';
+let savedColor = '#000000FF';
+let currentOpacity = 'FF';
+let eraserActive = false;
 let previewNewColor = previewNewColorDefault;
 let displayCurrentColor = displayCurrentColorDefault;
 let setNewColor = setNewColorDefault;
@@ -10,6 +12,7 @@ createNewCanvas(30, 30);
 createStandardColorPalette();
 addButtonListeners();
 toggleBrush();
+initializeOpacitySlider();
 
 function addButtonListeners() {
   document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
@@ -21,6 +24,32 @@ function addButtonListeners() {
   document.querySelector('#add-color-button').addEventListener('click', addNewColorPaletteChoice);
   document.querySelector('#add-color-button').addEventListener('click', disableColorDeleteMode);
   document.querySelector('#remove-color-button').addEventListener('click', enableColorDeleteMode);
+}
+
+function initializeOpacitySlider() {
+  const opacitySlider = document.querySelector('#opacity-slider');
+  const opacityNumber = document.querySelector('#opacity-number');
+  const opacityColorPreview = document.querySelector('#opacity-color-preview');
+  opacityNumber.textContent = `${opacitySlider.value}%`;
+  opacityColorPreview.setAttribute('style', `background-color: ${savedColor}`);
+  opacitySlider.addEventListener('input', changeColorOpacity);
+}
+
+function convertDecPercentToHexString(decString) {
+  return (Math.round(Number(decString)*2.55).toString(16));
+}
+
+function changeColorOpacity() {
+  const opacitySlider = document.querySelector('#opacity-slider');
+  const opacityNumber = document.querySelector('#opacity-number');
+  opacityNumber.textContent = `${opacitySlider.value}%`;
+  const opacityColorPreview = document.querySelector('#opacity-color-preview');
+  currentOpacity = convertDecPercentToHexString(opacitySlider.value);
+  savedColor = savedColor.slice(0, 7) + currentOpacity;
+  if (!eraserActive) {
+    currentColor = savedColor;
+  }
+  opacityColorPreview.setAttribute('style', `background-color: ${savedColor}`);
 }
 
 function enableColorDeleteMode() {
@@ -91,9 +120,11 @@ function enableColor() {
   // the following boolean expression is only true if the eraser is enabled
   if (currentColor !== savedColor) return;
   else {
-    const newColor = this.getAttribute('data-color');
+    const newColor = this.getAttribute('data-color') + currentOpacity;
     currentColor = newColor;
     savedColor = newColor;
+    const opacityColorPreview = document.querySelector('#opacity-color-preview');
+    opacityColorPreview.setAttribute('style', `background-color: ${newColor}`);
     removeActiveColorStyling();
     this.classList.add('color-palette-element-active');
   }
@@ -128,6 +159,7 @@ function updateCanvasListeners() {
 
 function toggleBrush() {
   currentColor = savedColor;
+  eraserActive = false;
   removeCanvasListeners();
   setNewColor = setNewColorDefault;
   setNewColorHold = setNewColorHoldDefault;
@@ -140,6 +172,7 @@ function toggleBrush() {
 
 function toggleEraser() {
   currentColor = '#FFFFFF';
+  eraserActive = true;
   removeCanvasListeners();
   setNewColor = setNewColorDefault;
   setNewColorHold = setNewColorHoldDefault;
@@ -152,6 +185,7 @@ function toggleEraser() {
 
 function toggleFill() {
   currentColor = savedColor;
+  eraserActive = false;
   removeCanvasListeners();
   setNewColor = setNewColorFill;
   setNewColorHold = setNewColorHoldFill;

@@ -61,6 +61,10 @@ button {
   user-select: none;
 }
 
+#opacity-slider {
+  user-select: none;
+}
+
 .canvas-include-row-border {
   border-bottom: 1px solid black;
 }
@@ -94,7 +98,7 @@ button {
   column-gap: 20px;
 }
 
-.color-palette-element {
+.color-palette-element, #opacity-color-preview {
   width: 21px;
   height: 21px;
 }
