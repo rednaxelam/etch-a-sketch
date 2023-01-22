@@ -16,7 +16,7 @@ initializeOpacitySlider();
 
 function addButtonListeners() {
   document.querySelector('#clear-canvas-button').addEventListener('click', clearCanvas);
-  document.querySelector('#set-resolution-button').addEventListener('click', promptNewDimensions);
+  document.querySelector('#set-dimensions-view-options').addEventListener('click', displayNewDimensionsSlider);
   document.querySelector('#toggle-borders-button').addEventListener('click', toggleBorders);
   document.querySelector('#brush-button').addEventListener('click', toggleBrush);
   document.querySelector('#eraser-button').addEventListener('click', toggleEraser);
@@ -24,6 +24,43 @@ function addButtonListeners() {
   document.querySelector('#add-color-button').addEventListener('click', addNewColorPaletteChoice);
   document.querySelector('#add-color-button').addEventListener('click', disableColorDeleteMode);
   document.querySelector('#remove-color-button').addEventListener('click', enableColorDeleteMode);
+}
+
+function displayNewDimensionsSlider() {
+  const setDimensionsContainer = document.querySelector('#set-dimensions-container');
+  const setDimensionsViewOptionsButton = document.querySelector('#set-dimensions-view-options');
+  const setDimensionsChoice = createElement('div', {'id': 'set-dimensions-choice'});
+  const newDimensionsSlider = createElement('input', {'type': 'range', 'min': '1', 'max': '50', 'value': '30', 'step': '1', 'id': 'new-dimensions-slider'});
+  const newDimensionsSliderValue = createElement('div', {'id': 'new-dimensions-value'});
+  newDimensionsSliderValue.textContent = '30';
+  setDimensionsChoice.append(newDimensionsSlider, newDimensionsSliderValue);
+  const setNewDimensionsButton = createElement('button', {'id': 'set-dimensions-button'});
+  setNewDimensionsButton.textContent = 'Change';
+  setDimensionsContainer.append(setDimensionsChoice, setNewDimensionsButton);
+
+  setDimensionsViewOptionsButton.removeEventListener('click', displayNewDimensionsSlider);
+  setDimensionsViewOptionsButton.addEventListener('click', removeNewDimensionsSlider);
+  newDimensionsSlider.addEventListener('input', displaySliderValue);
+  setNewDimensionsButton.addEventListener('click', setNewDimensions);
+}
+
+function removeNewDimensionsSlider() {
+  document.querySelector('#set-dimensions-choice').remove();
+  document.querySelector('#set-dimensions-button').remove();
+
+  const setDimensionsViewOptionsButton = document.querySelector('#set-dimensions-view-options');
+  setDimensionsViewOptionsButton.removeEventListener('click', removeNewDimensionsSlider);
+  setDimensionsViewOptionsButton.addEventListener('click', displayNewDimensionsSlider);
+}
+
+function displaySliderValue() {
+  const newDimensionsSliderValue = document.querySelector('#new-dimensions-value');
+  newDimensionsSliderValue.textContent = this.value;
+}
+
+function setNewDimensions() {
+  const newDimensionsSliderValue = Number(document.querySelector('#new-dimensions-slider').value);
+  createNewCanvas(newDimensionsSliderValue, newDimensionsSliderValue);
 }
 
 function initializeOpacitySlider() {
@@ -255,28 +292,6 @@ function toggleBorders() {
       }
     }
   }
-}
-
-function promptNewDimensions() {
-  let newDimensionsString = prompt("(This will clear the canvas)\nEnter the number of rows and columns that you'd like below (maximum 100).");
-  if (newDimensionsString === null) return;
-  let newDimensions = Number(newDimensionsString);
-
-  while (!validDimension(newDimensions)) {
-    if (newDimensionsString === '') alert("Please enter a number. (You can exit without making changes by pressing cancel when prompted for a number).");
-    else if (isNaN(newDimensions)) alert("Please enter a number.");
-    else if (!Number.isInteger(num)) alert("Please enter a whole number.");
-    else if (num <= 0 || num > 100) alert("Please enter a number between 1 and 100 (inclusive)");
-    newDimensionsString = prompt("(This will clear the canvas)\nEnter the number of rows and columns that you'd like below (maximum 100).");
-    if (newDimensionsString === null) return;
-    newDimensions = Number(newDimensionsString);
-  }
-
-  createNewCanvas(newDimensions, newDimensions);
-}
-
-function validDimension(num) {
-  return Number.isInteger(num) && num > 0 && num <= 100;
 }
 
 // you don't need to create an element list in this way
