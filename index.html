@@ -15,44 +15,64 @@
     </div>
     <div id="main-container">
       <div id="left-toolbar">
-        <button id="clear-canvas-button">
-          Clear All
-        </button>
-        <button id="toggle-borders-button" data-borders="on">
-          Remove Borders
-        </button>
-        <div id="set-dimensions-container">
-          <button id="set-dimensions-view-options">
-            Change Dimensions
-          </button>
+        
+        <div id="canvas-options-container">
+          <p class="toolbar-header">Canvas Options</p>
 
+          <button id="clear-canvas-button">Clear All</button>
+          <button id="toggle-borders-button" data-borders="on">Remove Borders</button>
+          <div id="set-dimensions-container">
+            <button id="set-dimensions-view-options">Change Dimensions</button>
+          </div>
         </div>
-      </div>
-      <div id="drawing-canvas">
 
-      </div>
-      <div id="right-toolbar">
-        <button id="brush-button">Brush</button>
-        <button id="eraser-button">Eraser</button>
-        <button id="fill-button">Fill</button>
-        <div id="add-color">
-          <button id="add-color-button">Add Color</button>
-          <input id="add-color-choose-color" type="color">
+        <div id="brush-options">
+          <p class="toolbar-header">
+            Brush Options
+          </p>
+          <div id="brush-options-choices">
+            <button id="brush-button">Brush</button>
+            <button id="eraser-button">Eraser</button>
+            <button id="fill-button">Fill</button>
+          </div>
         </div>
-        <button id="remove-color-button">Remove Colors</button>
-        <div id="color-palette">
 
+        <div id="color-palette-container">
+          <p class="toolbar-header">
+            Colour Palette
+          </p>
+          <div id="add-color">
+            <button id="add-color-button">Add Color</button>
+            <input id="add-color-choose-color" type="color" value="#17f3ff">
+          </div>
+          <div id="color-palette">
+  
+          </div>
+          <button id="remove-color-button">Remove Colors</button>
         </div>
-        <div>
+
+
+        <div id="opacity-container">
           <div id="opacity-header">
-            <p>Change Opacity</p>
+            <p class="expand">Opacity</p>
             <div id="opacity-number"></div>
           </div>
           <div id="opacity-content">
-            <input type="range" min="10" max="100" value="100" step="1" id="opacity-slider">
+            <input type="range" min="10" max="100" value="100" step="1" id="opacity-slider" class="expand">
             <div id="opacity-color-preview"></div>
           </div>
         </div>
+
+
+      </div>
+      <div id="drawing-canvas-container">
+        <div id="drawing-canvas">
+
+        </div>
+      </div>
+
+      <div id="right-toolbar">
+
       </div>
     </div>
   </div>

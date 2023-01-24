@@ -29,10 +29,12 @@ function addButtonListeners() {
 function displayNewDimensionsSlider() {
   const setDimensionsContainer = document.querySelector('#set-dimensions-container');
   const setDimensionsViewOptionsButton = document.querySelector('#set-dimensions-view-options');
-  const setDimensionsChoice = createElement('div', {'id': 'set-dimensions-choice'});
-  const newDimensionsSlider = createElement('input', {'type': 'range', 'min': '1', 'max': '50', 'value': '30', 'step': '1', 'id': 'new-dimensions-slider'});
-  const newDimensionsSliderValue = createElement('div', {'id': 'new-dimensions-value'});
-  newDimensionsSliderValue.textContent = '30';
+  setDimensionsViewOptionsButton.classList.add('set-dimensions-view-options-active');
+  const setDimensionsChoice = createElement('div', {'id': 'set-dimensions-choice', 'style': 'display: flex'});
+  const currentDimensions = document.querySelector('#drawing-canvas').childNodes.length;
+  const newDimensionsSlider = createElement('input', {'type': 'range', 'min': '1', 'max': '50', 'value': `${currentDimensions}`, 'step': '1', 'id': 'new-dimensions-slider', 'class': ['expand']});
+  const newDimensionsSliderValue = createElement('div', {'id': 'new-dimensions-value', 'style': 'margin: 10px; font-size: 20px;'});
+  newDimensionsSliderValue.textContent = `${currentDimensions} x ${currentDimensions}`;
   setDimensionsChoice.append(newDimensionsSlider, newDimensionsSliderValue);
   const setNewDimensionsButton = createElement('button', {'id': 'set-dimensions-button'});
   setNewDimensionsButton.textContent = 'Clear All and Change';
@@ -49,13 +51,14 @@ function removeNewDimensionsSlider() {
   document.querySelector('#set-dimensions-button').remove();
 
   const setDimensionsViewOptionsButton = document.querySelector('#set-dimensions-view-options');
+  setDimensionsViewOptionsButton.classList.remove('set-dimensions-view-options-active');
   setDimensionsViewOptionsButton.removeEventListener('click', removeNewDimensionsSlider);
   setDimensionsViewOptionsButton.addEventListener('click', displayNewDimensionsSlider);
 }
 
 function displaySliderValue() {
   const newDimensionsSliderValue = document.querySelector('#new-dimensions-value');
-  newDimensionsSliderValue.textContent = this.value;
+  newDimensionsSliderValue.textContent = `${this.value} x ${this.value}`;
 }
 
 function setNewDimensions() {
@@ -329,7 +332,7 @@ function createNewCanvas(numRows, numCols) {
     const canvasRow = createElement('div', {'class': ['canvas-row', 'canvas-include-row-border'], 'data-row': `${i}`});
     addBordersClasses(canvasRow, i, numRows);
     for (let j = 0; j < numCols; j++) {
-      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`, 'data-color': '#FFFFFF'});
+      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`, 'data-color': '#FFFFFF', 'style': 'background-color: white;'});
       addBordersClasses(canvasElement, i, numRows, j, numCols);
       addCanvasElementListeners(canvasElement)
       canvasRow.append(canvasElement);

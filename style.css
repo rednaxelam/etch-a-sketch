@@ -1,14 +1,38 @@
+* {
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
   margin: 0px;
   min-height: 100vh;
+  background-image: url("./img/background-image.png");
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1 {
   margin: 0px;
+  font-size: 36px;
+  display: inline-block;
+  border: 10px solid #de1010;
+  border-radius: 10px;
+  padding: 10px;
+  background-size: 8.95px 8.35px;
+  background-color: white;
+  background-image:
+    linear-gradient(to right, lightgrey 1px, transparent 1px),
+    linear-gradient(to bottom, lightgrey 1px, transparent 1px);
 }
 
 button {
   width: 200px;
+  border-radius: 0px;
+  border-width: 1px 1px;
+}
+
+p {
+  margin: 0px;
 }
 
 #main {
@@ -16,39 +40,56 @@ button {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+  row-gap: 10px;
 }
 
 #header {
   text-align: center;
+  margin-top: 10px;
 }
 
 #main-container {
   display: flex;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 #left-toolbar {
-  flex: 1 1 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   row-gap: 10px;
+  background-color: white;
+  margin-bottom: 10px;
 }
 
 #right-toolbar {
-  flex: 1 1 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
   row-gap: 10px;
+  width: 310px;
 }
 
 #drawing-canvas {
-  height: 800px;
-  width: 800px;
-  border: 1px solid black;
+  --minDim: min(80vh, 80vw);
+  min-height: min(var(--minDim), 800px);
+  max-height: min(var(--minDim), 800px);
+  min-width: min(var(--minDim), 800px);
+  max-width: min(var(--minDim), 800px);
+  border: 0.1px solid black;
   display: flex;
   flex-direction: column;
+}
+
+#drawing-canvas-container {
+  --borderWidth: min(2.5vh, 24.375px);
+  border: var(--borderWidth) solid #de1010;
+  border-radius: var(--borderWidth);
+  margin-bottom: 10px;
+  background-color: white;
+
 }
 
 .canvas-row {
@@ -66,11 +107,11 @@ button {
 }
 
 .canvas-include-row-border {
-  border-bottom: 1px solid black;
+  border-bottom: 0.1px solid black;
 }
 
 .canvas-include-element-border {
-  border-right: 1px solid black;
+  border-right: 0.1px solid black;
 }
 
 .canvas-include-row-border.borders-bottom {
@@ -81,7 +122,7 @@ button {
   border-right: none;
 }
 
-.brush-active, .eraser-active, .fill-active, .remove-color-active {
+.brush-active, .eraser-active, .fill-active, .remove-color-active, .set-dimensions-view-options-active {
   background-color: blue;
   color: white;
 }
@@ -90,23 +131,119 @@ button {
   cursor: crosshair;
 }
 
+#brush-options, #color-palette-container, #opacity-container, #canvas-options-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 0px;
+  width: 300px;
+  box-shadow: 0px 0px 10px gray;
+}
+
+.toolbar-header {
+  background-color: aliceblue;
+  border-bottom: 2px solid black;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+#brush-options-choices {
+  display: flex;
+}
+
+#color-palette-container {
+  align-items: stretch;
+  background-color: white;
+}
+
+#add-color {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+
+#add-color-button {
+  flex: 1 1 0;
+}
+
+#add-color-choose-color {
+  flex: 1 1 0;
+  border-radius: 0px;
+}
+
 #color-palette {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 10px;
   row-gap: 10px;
-  max-width: 300px;
-  column-gap: 20px;
+  column-gap: 15px;
+  margin-bottom: 10px;
 }
 
-.color-palette-element, #opacity-color-preview {
-  width: 21px;
-  height: 21px;
+.color-palette-element {
+  width: 25px;
+  height: 25px;
+  transition: 200ms;
+}
+
+.color-palette-element:hover {
+  background-color: white;
+  transform: scale(1.1);
 }
 
 .color-palette-element-active {
   border: 2px solid black;
+  width: 21px;
+  height: 21px;
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
 }
 
 .remove-color-highlight {
-  opacity: 0.5;
+  background-image: url(./img/x.svg);
+}
+
+#remove-color-button {
+  width: auto;
+}
+
+#opacity-header {
+  background-color: aliceblue;
+  border-bottom: 2px solid black;
+  display: flex;
+}
+
+#opacity-header p, #opacity-header div {
+  font-size: 22px;
+}
+
+.expand {
+  flex-grow: 1;
+}
+
+#opacity-content {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+
+}
+
+#opacity-color-preview {
+  margin: 10px 10px;
+  width: 40px;
+  height: 40px;
+}
+
+#canvas-options-container button {
+  width: auto;
+}
+
+#set-dimensions-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#set-dimensions-choice {
+  background-color: white;
 }
