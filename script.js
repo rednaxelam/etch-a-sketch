@@ -1,4 +1,4 @@
-/* This file is divided into ${x} sections:
+/* This file is divided into 7 sections:
 
 -Initial Webpage Calls and Global Variables 
 -Canvas Creation
@@ -47,7 +47,6 @@ function addButtonListeners() {
 
 /* ## Canvas Creation */
 
-// !!! createNewCanvas can be written in a way such that performing the checks in addBorderClasses is not needed. Change later if happy with structure of divs in the Canvas
 function createNewCanvas(numRows, numCols) {
   removeCurrentCanvas();
   globalRowsMaxIndex = numRows - 1;
@@ -99,15 +98,15 @@ function addBordersClasses(element, i, numRows, j = undefined, numCols = undefin
 
 /* ## Canvas Manipulation*/
 
-// you don't need to create an element list in this way
 function clearCanvas() {
-  const elementList = document.querySelectorAll('.canvas-element');
-  for (let i = 0; i < elementList.length; i++) {
-    elementList.item(i).setAttribute('style', 'background-color: #ffffffff');
-    elementList.item(i).setAttribute('data-color', '#ffffffff');
+  const canvas = getCanvas();
+  for (let row = canvas.firstChild; row !== null; row = row.nextSibling) {
+    for (let element = row.firstChild; element !== null; element = element.nextSibling) {
+      element.setAttribute('style', 'background-color: #ffffffff');
+      element.setAttribute('data-color', '#ffffffff');
+    }
   }
 }
-
 
 function toggleBorders() {
   const canvas = getCanvas();
@@ -345,6 +344,7 @@ function createStandardColorPalette() {
     paletteElement = createColorPaletteChoice(standardColours[i]);
     colorPalette.append(paletteElement);
   }
+  colorPalette.firstElementChild.classList.add('color-palette-element-active');
 }
 
 function createColorPaletteChoice(colorHex) {

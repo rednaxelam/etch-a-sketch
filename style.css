@@ -188,8 +188,9 @@ p {
 }
 
 .color-palette-element {
-  width: 25px;
-  height: 25px;
+  border: 1px solid gray;
+  width: 23px;
+  height: 23px;
   transition: 200ms;
 }
 
