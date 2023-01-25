@@ -353,11 +353,12 @@ function createColorPaletteChoice(colorHex) {
 }
 
 function enableColor() {
-  // the following boolean expression is only true if the eraser is enabled
   if (eraserActive) toggleBrush();
+  currentOpacity = 'ff';
   const newColor = this.getAttribute('data-color') + currentOpacity;
   currentColor = newColor;
   savedColor = newColor;
+  resetOpacitySlider();
   const opacityColorPreview = document.querySelector('#opacity-color-preview');
   opacityColorPreview.setAttribute('style', `background-color: ${newColor}`);
   removeActiveColorStyling();
@@ -396,6 +397,15 @@ function changeColorOpacity() {
   if (!eraserActive) {
     currentColor = savedColor;
   }
+  opacityColorPreview.setAttribute('style', `background-color: ${savedColor}`);
+}
+
+function resetOpacitySlider() {
+  const opacitySlider = document.querySelector('#opacity-slider');
+  const opacityNumber = document.querySelector('#opacity-number');
+  const opacityColorPreview = document.querySelector('#opacity-color-preview');
+  opacitySlider.value = '100';
+  opacityNumber.textContent = `${opacitySlider.value}%`;
   opacityColorPreview.setAttribute('style', `background-color: ${savedColor}`);
 }
 
