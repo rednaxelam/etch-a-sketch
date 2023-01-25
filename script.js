@@ -14,9 +14,9 @@ Each section has a comment with a "##" and section name above it for easy naviga
 
 let globalRowsMaxIndex;
 let globalColsMaxIndex;
-let currentColor = '#000000FF';
-let savedColor = '#000000FF';
-let currentOpacity = 'FF';
+let currentColor = '#000000ff';
+let savedColor = '#000000ff';
+let currentOpacity = 'ff';
 let eraserActive = false;
 let previewNewColor = previewNewColorDefault;
 let displayCurrentColor = displayCurrentColorDefault;
@@ -57,7 +57,7 @@ function createNewCanvas(numRows, numCols) {
     const canvasRow = createElement('div', {'class': ['canvas-row', 'canvas-include-row-border'], 'data-row': `${i}`});
     addBordersClasses(canvasRow, i, numRows);
     for (let j = 0; j < numCols; j++) {
-      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`, 'data-color': '#FFFFFF', 'style': 'background-color: white;'});
+      const canvasElement = createElement('div', {'class': ['canvas-element', 'canvas-include-element-border'], 'data-row': `${i}`, 'data-col': `${j}`, 'data-color': '#ffffffff', 'style': 'background-color: #ffffffff;'});
       addBordersClasses(canvasElement, i, numRows, j, numCols);
       addCanvasElementListeners(canvasElement)
       canvasRow.append(canvasElement);
@@ -103,8 +103,8 @@ function addBordersClasses(element, i, numRows, j = undefined, numCols = undefin
 function clearCanvas() {
   const elementList = document.querySelectorAll('.canvas-element');
   for (let i = 0; i < elementList.length; i++) {
-    elementList.item(i).setAttribute('style', 'background-color: #FFFFFF');
-    elementList.item(i).setAttribute('data-color', '#FFFFFF');
+    elementList.item(i).setAttribute('style', 'background-color: #ffffffff');
+    elementList.item(i).setAttribute('data-color', '#ffffffff');
   }
 }
 
@@ -227,7 +227,7 @@ function toggleBrush() {
 }
 
 function toggleEraser() {
-  currentColor = '#FFFFFF';
+  currentColor = '#ffffffff';
   eraserActive = true;
   removeCanvasListeners();
   setNewColor = setNewColorDefault;
@@ -338,7 +338,7 @@ function addNewColorPaletteChoice() {
 
 function createStandardColorPalette() {
   const colorPalette = document.querySelector('#color-palette');
-  const standardColours = ['#000000', '#FF0000', '#3399ff', '#00cc00', '#00FF00', '#0000FF', '#ff0000', '#cc3399', '#cc00ff', '#ff9900', '#ffff00', '#99ff99', '#999966'];
+  const standardColours = ['#000000', '#ff0000', '#3399ff', '#00cc00', '#00ff00', '#0000ff', '#cc3399', '#cc00ff', '#ff9900', '#ffff00', '#99ff99', '#999966'];
   for (let i = 0; i < standardColours.length; i++) {
     paletteElement = createColorPaletteChoice(standardColours[i]);
     colorPalette.append(paletteElement);
