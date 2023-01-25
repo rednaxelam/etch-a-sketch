@@ -354,16 +354,14 @@ function createColorPaletteChoice(colorHex) {
 
 function enableColor() {
   // the following boolean expression is only true if the eraser is enabled
-  if (currentColor !== savedColor) return;
-  else {
-    const newColor = this.getAttribute('data-color') + currentOpacity;
-    currentColor = newColor;
-    savedColor = newColor;
-    const opacityColorPreview = document.querySelector('#opacity-color-preview');
-    opacityColorPreview.setAttribute('style', `background-color: ${newColor}`);
-    removeActiveColorStyling();
-    this.classList.add('color-palette-element-active');
-  }
+  if (eraserActive) toggleBrush();
+  const newColor = this.getAttribute('data-color') + currentOpacity;
+  currentColor = newColor;
+  savedColor = newColor;
+  const opacityColorPreview = document.querySelector('#opacity-color-preview');
+  opacityColorPreview.setAttribute('style', `background-color: ${newColor}`);
+  removeActiveColorStyling();
+  this.classList.add('color-palette-element-active');
 }
 
 function removeActiveColorStyling() {
