@@ -122,8 +122,13 @@ p {
   border-right: none;
 }
 
-.brush-active, .eraser-active, .fill-active, .remove-color-active, .set-dimensions-view-options-active {
+.brush-active, .eraser-active, .fill-active, .set-dimensions-view-options-active {
   background-color: blue;
+  color: white;
+}
+
+.remove-color-active {
+  background-color: red;
   color: white;
 }
 

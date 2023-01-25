@@ -295,6 +295,7 @@ function enableColorDeleteMode() {
   removeColorButton.classList.add('remove-color-active');
   removeColorButton.removeEventListener('click', enableColorDeleteMode);
   removeColorButton.addEventListener('click', disableColorDeleteMode);
+  removeColorButton.textContent = 'Stop Removing Colors';
   for (let paletteElement = colorPalette.firstElementChild; paletteElement !== null; paletteElement = paletteElement.nextElementSibling) {
     paletteElement.removeEventListener('click', enableColor);
     paletteElement.addEventListener('click', removeColor);
@@ -321,6 +322,7 @@ function disableColorDeleteMode() {
   removeColorButton.classList.remove('remove-color-active');
   removeColorButton.removeEventListener('click', disableColorDeleteMode);
   removeColorButton.addEventListener('click', enableColorDeleteMode);
+  removeColorButton.textContent = "Remove Colors";
   for (let paletteElement = colorPalette.firstElementChild; paletteElement !== null; paletteElement = paletteElement.nextElementSibling) {
     paletteElement.removeEventListener('click', removeColor);
     paletteElement.removeEventListener('mouseenter', removeColorHighlight);
