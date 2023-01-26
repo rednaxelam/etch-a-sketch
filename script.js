@@ -184,8 +184,8 @@ function displayCurrentColorDefault() {
   this.setAttribute('style', `background-color: ${this.getAttribute('data-color')}`)
 }
 
-function setNewColorDefault() {
-  this.setAttribute('data-color', `${currentColor}`);
+function setNewColorDefault(e) {
+  if (e.buttons === 1) this.setAttribute('data-color', `${currentColor}`);
 }
 
 function setNewColorHoldDefault(e) {
@@ -251,7 +251,8 @@ function toggleFill() {
   document.querySelector('#eraser-button').classList.remove('eraser-active');
 }
 
-function setNewColorFill() {
+function setNewColorFill(e) {
+  if (e.buttons !== 1) return; 
   const targetColor = this.getAttribute('data-color');
   if (targetColor === currentColor) return;
   else {
